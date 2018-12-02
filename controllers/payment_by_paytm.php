@@ -9,13 +9,12 @@ class Payment_by_paytm extends CI_Controller {
         //===================================================
         // Loads Paytm Authorized Files
         //===================================================
-        // include APPPATH . 'third_party/stack_web_gateway_paytm_kit/config_paytm.php';
-        //===================================================
-		header("Pragma: no-cache");
-		header("Cache-Control: no-cache");
-		header("Expires: 0");
+	header("Pragma: no-cache");
+	header("Cache-Control: no-cache");
+	header("Expires: 0");
 
         $this->load->library('Stack_web_gateway_paytm_kit');
+	//===================================================
     }
     public function index()
     {
