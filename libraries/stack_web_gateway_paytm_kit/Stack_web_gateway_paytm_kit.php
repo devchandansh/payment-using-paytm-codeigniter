@@ -3,10 +3,8 @@
  *
  * @package		Payment Gateway PayTM 
  * @author		Chandan Sharma
- * @author		StackOfCodes.in Development Team.
  * @copyright	Copyright (c) 2008 - 2011, StackOfCodes.in.
  * @link		http://www.chandansharma.co.in/
- * @license		https://www.stackofcodes.in/
  * @since		Version 1.0.0
  * @filesource
  */
@@ -14,16 +12,6 @@
 // ------------------------------------------------------------------------
 
 class Stack_web_gateway_paytm_kit{
-
-	/*
-	*|======================================================================|
-	*|	PayTM Payment Gateway Integration Kit (Stack Version : 1.0.0)		|
-	*|	@Author : Chandan Sharma 											|
-	*|	@Email: <devchandansh@gmail.com>									|
-	*|	@Website: <www.chandansharma.co.in>									|
-	*|	@Authorized Member: <www.stackofcodes.in>							|
-	*|======================================================================|
-	*/	
 
 	var $CI;
 	public function __construct($config = array())
