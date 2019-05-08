@@ -67,7 +67,7 @@ class Stack_web_gateway_paytm_kit{
 			$PAYTM_INDUSTRY_TYPE_ID = "Retail";
 			$PAYTM_MERCHANT_WEBSITE = "WEBSTAGING";
 
-			$PAYTM_CALLBACK_URL 	= "http://127.0.0.1/onlinecakedeliverykolkata/paytm_response";
+			$PAYTM_CALLBACK_URL 	= "http://127.0.0.1/paytmpayment/paytm_response";
 			
 		}
 
@@ -229,116 +229,4 @@ class Stack_web_gateway_paytm_kit{
 	}
 
 	public function removeCheckSumParam($arrayList) {
-		if (isset($arrayList["CHECKSUMHASH"])) {
-			unset($arrayList["CHECKSUMHASH"]);
-		}
-		return $arrayList;
-	}
-
-	public function getTxnStatus($requestParamList) {
-		return $this->callAPI(PAYTM_STATUS_QUERY_URL, $requestParamList);
-	}
-
-	public function getTxnStatusNew($requestParamList) {
-		return $this->callNewAPI(PAYTM_STATUS_QUERY_NEW_URL, $requestParamList);
-	}
-
-	public function initiateTxnRefund($requestParamList) {
-		$CHECKSUM = $this->getRefundChecksumFromArray($requestParamList,PAYTM_MERCHANT_KEY,0);
-		$requestParamList["CHECKSUM"] = $CHECKSUM;
-		return $this->callAPI(PAYTM_REFUND_URL, $requestParamList);
-	}
-
-	function callAPI($apiURL, $requestParamList) {
-		$jsonResponse = "";
-		$responseParamList = array();
-		$JsonData =json_encode($requestParamList);
-		$postData = 'JsonData='.urlencode($JsonData);
-		$ch = curl_init($apiURL);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);                                                                  
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                         
-		'Content-Type: application/json', 
-		'Content-Length: ' . strlen($postData))                                                                       
-		);  
-		$jsonResponse = curl_exec($ch);   
-		$responseParamList = json_decode($jsonResponse,true);
-		return $responseParamList;
-	}
-
-	function callNewAPI($apiURL, $requestParamList) {
-		$jsonResponse = "";
-		$responseParamList = array();
-		$JsonData =json_encode($requestParamList);
-		$postData = 'JsonData='.urlencode($JsonData);
-		$ch = curl_init($apiURL);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);                                                                  
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                         
-		'Content-Type: application/json', 
-		'Content-Length: ' . strlen($postData))                                                                       
-		);  
-		$jsonResponse = curl_exec($ch);   
-		$responseParamList = json_decode($jsonResponse,true);
-		return $responseParamList;
-	}
-	function getRefundChecksumFromArray($arrayList, $key, $sort=1) {
-		if ($sort != 0) {
-			ksort($arrayList);
-		}
-		$str = $this->getRefundArray2Str($arrayList);
-		$salt = $this->generateSalt_e(4);
-		$finalString = $str . "|" . $salt;
-		$hash = hash("sha256", $finalString);
-		$hashString = $hash . $salt;
-		$checksum = $this->encrypt_e($hashString, $key);
-		return $checksum;
-	}
-	function getRefundArray2Str($arrayList) {	
-		$findmepipe = '|';
-		$paramStr = "";
-		$flag = 1;	
-		foreach ($arrayList as $key => $value) {		
-			$pospipe = strpos($value, $findmepipe);
-			if ($pospipe !== false) 
-			{
-				continue;
-			}
-			
-			if ($flag) {
-				$paramStr .= $this->checkString_e($value);
-				$flag = 0;
-			} else {
-				$paramStr .= "|" . $this->checkString_e($value);
-			}
-		}
-		return $paramStr;
-	}
-	function callRefundAPI($refundApiURL, $requestParamList) {
-		$jsonResponse = "";
-		$responseParamList = array();
-		$JsonData =json_encode($requestParamList);
-		$postData = 'JsonData='.urlencode($JsonData);
-		$ch = curl_init($apiURL);	
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($ch, CURLOPT_URL, $refundApiURL);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);  
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-		$headers = array();
-		$headers[] = 'Content-Type: application/json';
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);  
-		$jsonResponse = curl_exec($ch);   
-		$responseParamList = json_decode($jsonResponse,true);
-		return $responseParamList;
-	}
-
-}
-?>
+		if (isset($arrayList["CHECKSU
